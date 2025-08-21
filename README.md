@@ -2,7 +2,9 @@
 2025 Data Engineering Course Project
 
 
-# 資料夾結構
+
+## 資料夾結構
+```
 de-project/
 ├── .venv/                                   # Python 虛擬環境
 ├── .gitignore                               # Git 忽略檔案設定
@@ -19,17 +21,18 @@ de-project/
 │   └── producer.py                          # 基本 Producer
 │
 └── docker-compose-broker.yml               # RabbitMQ Broker 配置
+```
 
 
+
+## 指令
+```
 # 建立虛擬環境並安裝依賴（同步）
 uv sync
 
 # 建立一個 network 讓各服務能溝通
 docker network create my_network
 
-# 指令
-
-```
 # 啟動服務
 docker compose -f docker-compose-broker.yml up -d
 
