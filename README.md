@@ -58,5 +58,5 @@ uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker2
 # 指定 worker queue
 uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker1%h -Q hahow_course
 uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker2%h -Q hahow_article
-uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker3%h -Q hahow_course, hahow_article
+uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker3%h -Q hahow_course,hahow_article
 ```
