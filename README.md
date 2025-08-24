@@ -50,5 +50,13 @@ uv run data_ingestion/producer.py
 uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker1%h
 uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker2%h
 
+# 指定 worker concurrency
+uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker1%h --concurrency=1
+uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker2%h --concurrency=1
 
+
+# 指定 worker queue
+uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker1%h -Q hahow_course
+uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker2%h -Q hahow_article
+uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker3%h -Q hahow_course, hahow_article
 ```
