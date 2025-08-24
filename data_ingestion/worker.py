@@ -22,6 +22,7 @@ app = Celery(
     include=[
         "data_ingestion.tasks",
         "data_ingestion.tasks_crawler_hahow_course",
+        "data_ingestion.tasks_crawler_hahow_article",
     ],
     # 指定 broker 為 rabbitmq
     # pyamqp://worker:worker@127.0.0.1:5672/

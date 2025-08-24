@@ -27,7 +27,7 @@ def crawler_hahow_course(category: str):
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36"
         }
         response = requests.get(url, headers=headers)
-        print(f"category: {category}, page:{p}, status_code:{response.status_code}")
+        print(f"course, category: {category}, page:{p}, status_code:{response.status_code}")
         if response.status_code == 200:
             courses = response.json()['data']['courseData']['products']
             for course in courses:
