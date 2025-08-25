@@ -1,31 +1,29 @@
 # 使用 Ubuntu 22.04 作為基礎映像檔
 FROM ubuntu:22.04
 
-# 更新套件列表，並安裝 Python 3.10、pip 和 netcat（用於連線檢查）
+# 更新套件列表，並安裝 Python 3.10 以及 pip 和 curl (用於下載套件)
 RUN apt-get update && \
-    apt-get install -y python3.10 python3-pip netcat
+    apt-get install -y python3.10 python3-pip curl 
+    
 
-# 安裝 uv (快速的 Python 套件管理工具)
-RUN pip install --no-cache-dir uv
+# 安裝 uv
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh \
+ && uv --version
 
-# 建立工作目錄 /app
-RUN mkdir /app
 
-# 將當前目錄（與 Dockerfile 同層）所有內容複製到容器的 /app 資料夾
-COPY . /app/
-
-# 設定容器的工作目錄為 /app，後續的指令都在這個目錄下執行
 WORKDIR /app
 
-# 使用 uv 安裝依賴（基於 pyproject.toml 和 uv.lock）
+# 先複製依賴檔，讓快取生效
+COPY pyproject.toml uv.lock README.md ./
+
+# 用 uv 安裝依賴（會建 .venv）
 RUN uv sync
 
-# 安裝專案為可編輯套件，讓 Python 能找到 data_ingestion 模組
-# RUN uv pip install -e .
+# 再複製專案程式碼
+COPY . .
 
-# 設定語系環境變數，避免 Python 編碼問題
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
+# 設定語系環境和時區變數
+ENV LC_ALL=C.UTF-8 LANG=C.UTF-8 TZ=Asia/Taipei
 
 # 啟動容器後，預設執行 bash（開啟終端）
 CMD ["/bin/bash"]
