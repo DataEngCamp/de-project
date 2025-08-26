@@ -3,6 +3,7 @@ services:
 
   mysql:
       image: mysql:8.0
+      container_name: mysql
       ports: 
           - 3306:3306
       environment:
@@ -22,14 +23,12 @@ services:
 
   phpmyadmin:
       image: phpmyadmin/phpmyadmin:5.2
+      container_name: phpmyadmin
       restart: always  # 若容器停止或崩潰，自動重新啟動
       ports:
           - 8000:80
       environment:
         PMA_HOST: mysql
-        PMA_USER: root
-        PMA_PASSWORD: 1234
-        MYSQL_ROOT_PASSWORD: 1234
       depends_on:
         - mysql
       networks:
