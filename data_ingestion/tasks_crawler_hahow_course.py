@@ -8,7 +8,7 @@ from data_ingestion.worker import app
 
 
 @app.task()
-def crawler_hahow_course(category: str):
+def crawler_hahow_course(category: str, **kwargs):
 
     # 取得總頁數
     url = f'https://api.hahow.in/api/products/search?category=COURSE&groups={category}'

@@ -3,3 +3,6 @@ output/
 *.pyc
 .cache
 *.csv
+*.log
+airflow/logs/
+.env

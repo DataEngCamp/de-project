@@ -74,7 +74,7 @@ def crawler_hahow_course(category: str):
         time.sleep(0.1)
 
     df = pd.DataFrame(course_list)
-    df.to_csv(f"hahow_course_{category}.csv", index=False, encoding='utf-8-sig')
+    df.to_csv(f"output/hahow_course_{category}.csv", index=False, encoding='utf-8-sig')
     print(f"hahow_course_{category}.csv saved.")
 
 

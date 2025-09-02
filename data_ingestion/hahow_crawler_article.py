@@ -79,9 +79,6 @@ def crawler_hahow_article(category: str):
     df.to_csv(f"output/hahow_article_{category}.csv", index=False, encoding='utf-8-sig')
     print(f"hahow_article_{category}.csv saved.")
 
-    upload_data_to_mysql(table_name="hahow_article", df=df)
-    print(f"hahow_article_{category} has been uploaded to mysql.")
-
 
 if __name__ == "__main__":
     crawler_hahow_article("programming")
