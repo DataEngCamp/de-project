@@ -8,7 +8,7 @@ from data_ingestion.mysql import upload_data_to_mysql
 
 def crawler_hahow_article(category: str):
 
-        # 取得總頁數
+    # 取得總頁數
     url = f'https://api.hahow.in/api/products/search?category=ARTICLE&groups={category}'
     headers = {
         "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36"
@@ -67,7 +67,7 @@ def crawler_hahow_article(category: str):
                     "updated_at": updated_at,
                     "publish_at": publish_at,
                 }
-                # print(article_dict)
+                print(article_dict)
                 article_list.append(article_dict) # 每次新增單筆文章資料
 
         else:

@@ -1,6 +1,7 @@
 import requests
 import math
 import time
+import numpy as np
 import pandas as pd
 from datetime import datetime, timezone
 
@@ -78,13 +79,12 @@ def crawler_hahow_article(category: str):
         time.sleep(0.1)
 
     df = pd.DataFrame(article_list)
-    # df.to_csv(f"output/hahow_article_{category}.csv", index=False, encoding='utf-8-sig')
-    # print(f"hahow_article_{category}.csv saved.")
-
     df['uploaded_at'] = datetime.now(timezone.utc)  # 新增 uploaded_at 欄位，設為現在時間
-    upload_data_to_mysql(table_name="hahow_article", df=df)
-    # data = df.to_dict(orient='records') # 將 DataFrame 轉換為字典列表
-    # upload_data_to_mysql_upsert(table_obj=article_table, data=data)
+    # 不能使用 replace 模式上傳，不同 category 的資料會被覆蓋
+    # upload_data_to_mysql(table_name="hahow_article", df=df, mode="replace")
+    df = df.replace({pd.NaT: None, np.nan: None})
+    data = df.to_dict(orient='records') # 將 DataFrame 轉換為字典列表
+    upload_data_to_mysql_upsert(table_obj=article_table, data=data)
     print(f"hahow_article_{category} has been uploaded to mysql.")
 
 

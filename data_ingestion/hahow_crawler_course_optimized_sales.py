@@ -95,14 +95,15 @@ def crawler_hahow_course(category: str):
 
     df = pd.DataFrame(course_list)
     df['uploaded_at'] = now_time  # 新增 uploaded_at 欄位，設為現在時間
-    upload_data_to_mysql(table_name="hahow_course", df=df, mode="replace")
+    # 不能使用 replace 模式上傳，不同類別的課程資料會被覆蓋
+    # upload_data_to_mysql(table_name="hahow_course", df=df, mode="replace")
+    upload_data_to_mysql_upsert(table_obj=course_table, data=df)
     print(f"hahow_course_{category} has been uploaded to mysql.")
 
     df_sales = pd.DataFrame(sales_history_list)
     df_sales['uploaded_at'] = now_time  # 新增 uploaded_at 欄位，設為現在時間
     upload_data_to_mysql(table_name="hahow_course_sales", df=df_sales, mode="append")
     print(f"hahow_course_sales_{category} uploaded to mysql.")
-
 
 
 if __name__ == "__main__":

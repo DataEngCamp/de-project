@@ -82,10 +82,13 @@ def crawler_hahow_course(category: str):
     df = pd.DataFrame(course_list)
 
     df['uploaded_at'] = datetime.now(timezone.utc)  # 新增 uploaded_at 欄位，設為現在時間
+    # 不能使用 replace 模式上傳，不同 category 的資料會被覆蓋
+    # upload_data_to_mysql(table_name="hahow_course", df=df, mode="replace")
+    
     # df['incubate_time'] = df['incubate_time'].replace({pd.NaT: None})
     # df['publish_time'] = df['publish_time'].replace({pd.NaT: None})
     # df['video_length'] = df['video_length'].replace({np.nan: None})
-    # df = df.replace({pd.NaT: None, np.nan: None})
+    df = df.replace({pd.NaT: None, np.nan: None})
     data = df.to_dict(orient='records') # 將 DataFrame 轉換為字典列表
     upload_data_to_mysql_upsert(table_obj=course_table, data=data)
     print(f"hahow_course_{category} has been uploaded to mysql.")
