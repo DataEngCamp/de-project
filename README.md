@@ -67,7 +67,7 @@ de-project/
 │       ├── example_dummy_tasks_dag.py       # 虛擬任務範例 DAG
 │       ├── example_parallel_dag.py          # 並行任務範例 DAG
 │       ├── hahow_crawler_dag.py             # Hahow 爬蟲 DAG
-│       ├── hahow_crawler_producer_dag.py    # Hahow Producer DAG
+│       └── hahow_crawler_producer_dag.py    # Hahow Producer DAG
 │
 │
 ├── example/                                 # 📚 SQL 範例與查詢
@@ -84,7 +84,7 @@ de-project/
     ├── docker-compose-broker.yml            # RabbitMQ Broker 配置
     ├── docker-compose-mysql.yml             # MySQL 資料庫配置
     ├── docker-compose-producer.yml          # Producer 服務配置
-    ├── docker-compose-worker.yml            # Worker 服務配置
+    └── docker-compose-worker.yml            # Worker 服務配置
 ```
 
 
@@ -99,6 +99,40 @@ uv sync
 # 建立一個 network 讓各服務能溝通
 docker network create my_network
 ```
+
+### 🌍 環境變數設定
+本專案使用純 Python 實現自動載入 `.env` 檔案中的環境變數，無需額外套件，類似 pipenv 的行為。
+
+### 🔄 載入環境變數的方法
+
+**方法一：使用 uv 內建功能**
+```bash
+uv run --env-file .env data_ingestion/producer.py
+uv run --env-file .env celery -A data_ingestion.worker worker --loglevel=info
+```
+- ✅ uv 原生支援
+- ✅ 明確指定環境變數來源
+- ✅ 不污染系統環境
+
+**方法二：使用 source 載入**
+```bash
+source .env
+uv run data_ingestion/producer.py
+uv run celery -A data_ingestion.worker worker --loglevel=info
+```
+- ✅ 最簡單的方式
+- ⚠️ 會影響當前 shell 環境
+
+**方法三：直接在終端載入**
+```bash
+# 方式 1: 使用 source（最簡單）
+source .env
+python data_ingestion/hahow_crawler_article_optimized.py
+
+**特色功能：**
+- ✅ 彈性選擇：多種方式適應不同需求
+- ✅ 預設值：如果 `.env` 不存在或變數未設定，使用程式碼預設值  
+- ✅ 開發友善：類似 pipenv 的使用體驗
 
 ### 📊 Metabase 商業智慧儀表板
 ```bash
@@ -161,6 +195,9 @@ docker compose -f docker-compose-mysql.yml down
 
 ### 🕷️ 爬蟲與任務執行
 ```bash
+# 一次載入，多次使用
+source .env
+
 # Producer 發送任務
 uv run data_ingestion/producer.py
 uv run data_ingestion/producer_crawler_hahow_all.py
