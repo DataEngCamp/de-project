@@ -109,3 +109,22 @@ def upload_data_to_mysql_upsert(table_obj: Table, data: list[dict]):
             upsert_stmt = insert_stmt.on_duplicate_key_update(**update_dict)
             connection.execute(upsert_stmt)
     print(f"✅ UPSERT 完成，處理 {len(data)} 筆記錄到表 '{table_obj.name}'")
+
+
+def upload_data_to_mysql_insert(table_obj: Table, data: list[dict]):
+    """使用純 SQL INSERT 上傳資料到 MySQL"""
+    mysql_address = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+    engine = create_engine(mysql_address)
+    
+    # 自動建立資料表（如果不存在才建立）
+    metadata.create_all(engine, tables=[table_obj])
+    
+    with engine.begin() as connection:
+        # 準備 INSERT 語句
+        columns = ', '.join([f"`{col.name}`" for col in table_obj.columns])
+        placeholders = ', '.join([f":{col.name}" for col in table_obj.columns])
+        insert_sql = f"INSERT INTO {table_obj.name} ({columns}) VALUES ({placeholders})"
+        
+        connection.execute(insert_sql, data)
+    
+    print(f"✅ INSERT 完成，處理 {len(data)} 筆記錄到表 '{table_obj.name}'")
