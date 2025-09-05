@@ -3,8 +3,8 @@ Hahow 爬蟲整合任務
 整合 course 和 article 爬蟲功能，註冊為 Celery 任務
 """
 from data_ingestion.worker import app
-from data_ingestion.hahow_crawler_course import crawler_hahow_course as _crawler_hahow_course
-from data_ingestion.hahow_crawler_article import crawler_hahow_article as _crawler_hahow_article
+from data_ingestion.hahow_crawler_course_optimized_sales import crawler_hahow_course as _crawler_hahow_course
+from data_ingestion.hahow_crawler_article_optimized import crawler_hahow_article as _crawler_hahow_article
 
 
 @app.task()

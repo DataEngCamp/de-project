@@ -9,8 +9,7 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.operators.dummy_operator import DummyOperator
 
 # 導入爬蟲任務
-from data_ingestion.tasks_crawler_hahow_article import crawler_hahow_article
-from data_ingestion.tasks_crawler_hahow_course import crawler_hahow_course
+from data_ingestion.tasks_crawler_hahow import crawler_hahow_article, crawler_hahow_course
 
 # 定義要爬取的分類
 CATEGORIES = ["programming", "marketing", "language"]

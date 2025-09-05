@@ -1,5 +1,4 @@
-from data_ingestion.tasks_crawler_hahow_article import crawler_hahow_article
-from data_ingestion.tasks_crawler_hahow_course import crawler_hahow_course
+from data_ingestion.tasks_crawler_hahow import crawler_hahow_article, crawler_hahow_course
 
 categories = ["programming", "marketing", "language"]
 
