@@ -112,7 +112,7 @@ def upload_data_to_mysql_upsert(table_obj: Table, data: list[dict]):
 
 
 def upload_data_to_mysql_insert(table_obj: Table, data: list[dict]):
-    """使用純 SQL INSERT 上傳資料到 MySQL"""
+    """使用 SQLAlchemy INSERT 上傳資料到 MySQL"""
     mysql_address = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
     engine = create_engine(mysql_address)
     
@@ -120,11 +120,8 @@ def upload_data_to_mysql_insert(table_obj: Table, data: list[dict]):
     metadata.create_all(engine, tables=[table_obj])
     
     with engine.begin() as connection:
-        # 準備 INSERT 語句
-        columns = ', '.join([f"`{col.name}`" for col in table_obj.columns])
-        placeholders = ', '.join([f":{col.name}" for col in table_obj.columns])
-        insert_sql = f"INSERT INTO {table_obj.name} ({columns}) VALUES ({placeholders})"
-        
-        connection.execute(insert_sql, data)
+        for row in data:
+            insert_stmt = insert(table_obj).values(**row)
+            connection.execute(insert_stmt)
     
     print(f"✅ INSERT 完成，處理 {len(data)} 筆記錄到表 '{table_obj.name}'")
