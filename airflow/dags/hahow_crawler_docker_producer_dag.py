@@ -21,7 +21,7 @@ default_args = {
 
 # 建立 DAG
 with DAG(
-    dag_id='hahow_crawler_docker_producer',
+    dag_id='hahow_crawler_docker_producer_dag',
     default_args=default_args,
     description='Hahow 平台數據爬取 DAG - 爬取課程和文章數據',
     schedule_interval='0 2 * * *',  # 每天凌晨 2 點執行
@@ -48,7 +48,6 @@ with DAG(
         command=DOCKER_COMMAND,
         network_mode=DOCKER_NETWORK,
         environment={
-            'RABBITMQ_HOST': 'rabbitmq',
             'TZ': 'Asia/Taipei'
         },
         auto_remove=True,  # 執行完成後自動刪除容器

@@ -37,7 +37,7 @@ default_args = {
 
 # 建立 DAG
 with DAG(
-    dag_id='hahow_crawler_producer',
+    dag_id='hahow_crawler_producer_dag',
     default_args=default_args,
     description='Hahow 平台數據爬取 DAG - 爬取課程和文章數據',
     schedule_interval='0 2 * * *',  # 每天凌晨 2 點執行

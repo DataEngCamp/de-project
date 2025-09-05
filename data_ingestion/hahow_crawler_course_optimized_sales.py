@@ -1,10 +1,11 @@
 import requests
 import math
 import time
+import numpy as np
 import pandas as pd
 from datetime import datetime, timezone
 
-from data_ingestion.mysql import upload_data_to_mysql, upload_data_to_mysql_upsert, course_table
+from data_ingestion.mysql import upload_data_to_mysql, upload_data_to_mysql_insert, upload_data_to_mysql_upsert, course_table, course_sales_table
 from data_ingestion.hahow_crawler_common import to_datetime
 
 
@@ -75,7 +76,6 @@ def crawler_hahow_course(category: str):
                 # print(course_dict)
                 course_list.append(course_dict) # 每次新增單筆課程資料
 
-
                 # 銷售歷史資料（用於插入歷史記錄）
                 course_sales_dict = {
                     "course_id": id,
@@ -97,12 +97,16 @@ def crawler_hahow_course(category: str):
     df['uploaded_at'] = now_time  # 新增 uploaded_at 欄位，設為現在時間
     # 不能使用 replace 模式上傳，不同類別的課程資料會被覆蓋
     # upload_data_to_mysql(table_name="hahow_course", df=df, mode="replace")
-    upload_data_to_mysql_upsert(table_obj=course_table, data=df)
+    df = df.replace({pd.NaT: None, np.nan: None})
+    data = df.to_dict(orient='records')
+    upload_data_to_mysql_upsert(table_obj=course_table, data=data)
     print(f"hahow_course_{category} has been uploaded to mysql.")
 
     df_sales = pd.DataFrame(sales_history_list)
     df_sales['uploaded_at'] = now_time  # 新增 uploaded_at 欄位，設為現在時間
-    upload_data_to_mysql(table_name="hahow_course_sales", df=df_sales, mode="append")
+    df_sales = df_sales.replace({pd.NaT: None, np.nan: None})
+    data = df_sales.to_dict(orient='records')
+    upload_data_to_mysql_insert(table_obj=course_sales_table, data=data)
     print(f"hahow_course_sales_{category} uploaded to mysql.")
 
 
