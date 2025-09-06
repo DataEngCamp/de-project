@@ -14,8 +14,8 @@ from data_ingestion.tasks_crawler_hahow import crawler_hahow_article, crawler_ha
 # 定義要爬取的分類
 CATEGORIES = [
     "programming", "marketing", "language", "design", 
-    "lifestyle", "music", "art", "photography", 'humanities'
-    "finance-and-investment", "career-skills", "cooking"
+    "lifestyle", "music", "art", "photography", 'humanities',
+    "finance-and-investment", "career-skills", "cooking",
 ]
 
 # 包裝函數，避免序列化問題

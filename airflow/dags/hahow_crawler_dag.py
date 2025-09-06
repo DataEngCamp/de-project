@@ -15,8 +15,8 @@ from data_ingestion.hahow_crawler_article_optimized import crawler_hahow_article
 # 定義要爬取的分類
 CATEGORIES = [
     "programming", "marketing", "language", "design", 
-    "lifestyle", "music", "art", "photography", 'humanities'
-    "finance-and-investment", "career-skills", "cooking"
+    "lifestyle", "music", "art", "photography", 'humanities',
+    "finance-and-investment", "career-skills", "cooking",
 ]
 
 # 預設參數
