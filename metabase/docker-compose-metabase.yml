@@ -14,8 +14,6 @@ services:
       MB_DB_HOST: mysql
     networks:
       - my_network
-    depends_on:
-      - mysql
     healthcheck:
       test: curl --fail -I http://localhost:3000/api/health || exit 1
       interval: 15s
