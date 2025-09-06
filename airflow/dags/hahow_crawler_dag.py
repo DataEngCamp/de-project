@@ -9,11 +9,15 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.operators.dummy_operator import DummyOperator
 
 # 導入爬蟲任務
-from data_ingestion.hahow_crawler_course import crawler_hahow_course
-from data_ingestion.hahow_crawler_article import crawler_hahow_article
+from data_ingestion.hahow_crawler_course_optimized_sales import crawler_hahow_course
+from data_ingestion.hahow_crawler_article_optimized import crawler_hahow_article
 
 # 定義要爬取的分類
-CATEGORIES = ["programming", "marketing", "language"]
+CATEGORIES = [
+    "programming", "marketing", "language", "design", 
+    "lifestyle", "music", "art", "photography", 'humanities'
+    "finance-and-investment", "career-skills", "cooking"
+]
 
 # 預設參數
 default_args = {
