@@ -42,7 +42,8 @@ def create_course_sales_daily_view():
       t.course_id,
       DATE(t.captured_at) AS captured_date,
       t.price,
-      t.sold_num
+      t.sold_num,
+      t.price * t.sold_num AS revenue
     FROM (
       SELECT
         s.*,
@@ -57,7 +58,7 @@ def create_course_sales_daily_view():
     WHERE t.rn = 1;
     """
     
-    create_view("vw_course_sales_daily", view_sql)
+    create_view(view_name="vw_course_sales_daily", view_sql=view_sql)
     print("✅ 課程銷售日統計 View 建立完成")
 
 
@@ -65,7 +66,7 @@ def replace_course_sales_daily_table():
     """
     從 vw_course_sales_daily View 建立實體 Table
     """
-    create_table_from_view("vw_course_sales_daily", "hahow_course_sales_daily")
+    create_table_from_view(view_name="vw_course_sales_daily", table_name="hahow_course_sales_daily")
     print("✅ 課程銷售日統計 Table 建立完成")
 
 
