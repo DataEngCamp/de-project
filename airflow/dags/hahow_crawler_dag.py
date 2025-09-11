@@ -35,7 +35,7 @@ with DAG(
     dag_id='hahow_crawler_dag',
     default_args=default_args,
     description='Hahow 平台數據爬取 DAG - 爬取課程和文章數據',
-    schedule_interval='0 2 * * *',  # 每天凌晨 2 點執行
+    schedule_interval='0 11,23 * * *',  # 每天 11 點和 23 點執行
     catchup=False,  # 不執行歷史任務
     max_active_runs=1,  # 同時只允許一個 DAG 實例運行
     tags=['hahow', 'crawler', 'etl'],

@@ -26,7 +26,7 @@ with DAG(
     dag_id='example_dummy_tasks_dag',
     default_args=default_args,
     description='A DAG example with multiple dummy tasks',
-    schedule_interval='0 2 * * *',  # 每天凌晨2點執行
+    schedule_interval=None,  # 不定期執行
     start_date=datetime(2024, 1, 1),  # 從2024年1月1日開始生效
     catchup=False,  # 不執行歷史任務
     tags=['example'],
