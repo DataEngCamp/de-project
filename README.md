@@ -137,13 +137,13 @@ python data_ingestion/hahow_crawler_article_optimized.py
 ### 📊 Metabase 商業智慧儀表板
 ```bash
 # 啟動 Metabase 服務（包含 PostgreSQL）
-docker compose -f metabase/docker-compose.yml up -d
+docker compose -f metabase/docker-compose-metabase.yml up -d
 
 # 停止 Metabase 服務
-docker compose -f metabase/docker-compose.yml down
+docker compose -f metabase/docker-compose-metabase.yml down
 
 # 查看 Metabase 服務狀態
-docker compose -f metabase/docker-compose.yml ps
+docker compose -f metabase/docker-compose-metabase.yml ps
 
 # 存取 Metabase 網頁介面
 # http://localhost:3000
@@ -224,13 +224,13 @@ uv run celery -A data_ingestion.worker worker --loglevel=info --hostname=worker3
 docker compose -f docker-compose-broker.yml up -d
 docker compose -f docker-compose-mysql.yml up -d
 docker compose -f airflow/docker-compose-airflow.yml up -d
-docker compose -f metabase/docker-compose.yml up -d
+docker compose -f metabase/docker-compose-metabase.yml up -d
 
 # 停止所有服務
 docker compose -f docker-compose-broker.yml down
 docker compose -f docker-compose-mysql.yml down
 docker compose -f airflow/docker-compose-airflow.yml down
-docker compose -f metabase/docker-compose.yml down
+docker compose -f metabase/docker-compose-metabase.yml down
 
 # 查看所有容器狀態
 docker ps -a
