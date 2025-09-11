@@ -1,5 +1,5 @@
 import pandas as pd
-from sqlalchemy import create_engine  # 建立資料庫連線的工具（SQLAlchemy）
+from sqlalchemy import create_engine, text  # 建立資料庫連線的工具（SQLAlchemy）
 from sqlalchemy import Column, Float, MetaData, String, Table, Integer, Text, DECIMAL, DATETIME
 from sqlalchemy.dialects.mysql import insert
 
@@ -125,3 +125,82 @@ def upload_data_to_mysql_insert(table_obj: Table, data: list[dict]):
             connection.execute(insert_stmt)
     
     print(f"✅ INSERT 完成，處理 {len(data)} 筆記錄到表 '{table_obj.name}'")
+
+
+def create_view(view_name: str, view_sql: str):
+    """
+    在 MySQL 中建立或替換 View
+    
+    Args:
+        view_name: View 的名稱
+        view_sql: 建立 View 的 SQL 語句
+    """
+    mysql_address = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+    engine = create_engine(mysql_address)
+    
+    with engine.begin() as connection:
+        try:
+            # 執行建立 View 的 SQL
+            connection.execute(text(view_sql))
+            print(f"✅ View '{view_name}' 建立成功")
+        except Exception as e:
+            print(f"❌ 建立 View '{view_name}' 失敗: {e}")
+            raise
+
+
+def create_course_sales_daily_view():
+    """
+    建立課程銷售日統計 View
+    """
+    view_sql = """
+    CREATE OR REPLACE VIEW vw_course_sales_daily AS
+    SELECT
+      t.course_id,
+      DATE(t.captured_at) AS captured_date,
+      t.price,
+      t.sold_num
+    FROM (
+      SELECT
+        s.*,
+        ROW_NUMBER() OVER (
+          PARTITION BY s.course_id, DATE(s.captured_at)
+          ORDER BY s.sold_num DESC, s.captured_at DESC, s.id DESC
+        ) AS rn
+      FROM hahow_course_sales s
+    ) AS t
+    WHERE t.rn = 1;
+    """
+    
+    create_view("vw_course_sales_daily", view_sql)
+
+
+def create_table_from_view(view_name: str, table_name: str):
+    """
+    使用純 SQL 從 View 中撈取資料並建立/取代實體 Table
+    
+    Args:
+        view_name: 來源 View 的名稱
+        table_name: 目標 Table 的名稱
+    """
+    mysql_address = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+    engine = create_engine(mysql_address)
+    
+    with engine.begin() as connection:
+        try:
+            # 完全取代：先刪除舊 Table，再建立新的
+            print(f"🗑️  正在刪除舊的 Table '{table_name}' (如果存在)...")
+            connection.execute(text(f"DROP TABLE IF EXISTS {table_name}"))
+            
+            print(f"📝 正在從 View '{view_name}' 建立新的 Table '{table_name}'...")
+            create_table_sql = f"CREATE TABLE {table_name} AS SELECT * FROM {view_name}"
+            connection.execute(text(create_table_sql))
+            
+            # 獲取記錄數量
+            result = connection.execute(text(f"SELECT COUNT(*) as count FROM {table_name}"))
+            count = result.fetchone()[0]
+            
+            print(f"✅ 成功建立 Table '{table_name}'，共 {count} 筆記錄")
+            
+        except Exception as e:
+            print(f"❌ 從 View '{view_name}' 建立 Table '{table_name}' 失敗: {e}")
+            raise
