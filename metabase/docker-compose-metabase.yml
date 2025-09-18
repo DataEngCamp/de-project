@@ -9,8 +9,8 @@ services:
       MB_DB_TYPE: mysql
       MB_DB_DBNAME: metabasedb
       MB_DB_PORT: 3306
-      MB_DB_USER: metabase
-      MB_DB_PASS: metabase
+      MB_DB_USER: ${MB_DB_USER:-metabase}
+      MB_DB_PASS: ${MB_DB_PASS:-metabase}
       MB_DB_HOST: mysql
     networks:
       - my_network
