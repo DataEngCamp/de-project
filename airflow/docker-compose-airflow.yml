@@ -10,7 +10,7 @@ x-airflow-common: &airflow-common
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     AIRFLOW__CORE__DEFAULT_TIMEZONE: Asia/Taipei
   env_file:
-    - .env
+    - ../.env
   volumes:
     # 將 airflow.cfg、dags、plugins、logs 掛載到容器中，讓 Airflow 可以使用 airflow.cfg 下的設定
     - ./airflow.cfg:/opt/airflow/airflow.cfg
