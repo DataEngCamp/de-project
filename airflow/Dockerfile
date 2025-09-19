@@ -24,6 +24,8 @@ RUN uv pip install --system "apache-airflow[google,docker,postgres]==2.10.4" \
 
 # 強制安裝 PyMySQL（解決依賴衝突）
 RUN uv pip install --system --force-reinstall pymysql==1.1.2
+# 強制安裝 SQLAlchemy 1.4.36（解決 Airflow 2.10.4 依賴衝突）
+RUN uv pip install --system --force-reinstall sqlalchemy==1.4.36
 
 # 複製專案檔案到 Airflow 工作目錄
 COPY ../pyproject.toml ../uv.lock ../README.md /opt/airflow/
