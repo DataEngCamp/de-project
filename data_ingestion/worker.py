@@ -23,4 +23,4 @@ app = Celery(
 )
 
 print(f"CPU 核心數: {multiprocessing.cpu_count()}")
-print("🚀 Celery Worker 已啟動，等待接收任務...")
+print("🚀 Celery 已經和 RabbitMQ 連接...")

@@ -20,9 +20,6 @@ RUN uv sync
 # 複製主要程式碼目錄
 COPY data_ingestion/ ./data_ingestion/
 
-# 複製環境變數檔案
-COPY .env ./
-
 # 建立 output 目錄
 RUN mkdir -p output
 
