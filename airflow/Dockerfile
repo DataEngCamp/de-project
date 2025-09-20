@@ -24,8 +24,6 @@ RUN uv pip install --system "apache-airflow[google,docker,postgres]==2.10.4" \
 
 # 強制安裝 PyMySQL（解決依賴衝突）
 RUN uv pip install --system --force-reinstall pymysql==1.1.2
-# 強制安裝 SQLAlchemy 1.4.36（解決 Airflow 2.10.4 依賴衝突）
-RUN uv pip install --system --force-reinstall sqlalchemy==1.4.36
 
 # 複製專案檔案到 Airflow 工作目錄
 COPY ../pyproject.toml ../uv.lock ../README.md /opt/airflow/
@@ -33,6 +31,8 @@ COPY ../data_ingestion /opt/airflow/data_ingestion/
 
 # 直接安裝專案依賴到系統環境（不建立虛擬環境）
 RUN cd /opt/airflow && uv pip install --system -e .
+# 強制重新安裝 SQLAlchemy 1.4.36（解決 Airflow 2.10.4 依賴衝突）
+RUN uv pip install --system --force-reinstall sqlalchemy==1.4.36
 
 # 設定時區和 Airflow 主目錄
 ENV AIRFLOW_HOME=/opt/airflow
