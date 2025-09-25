@@ -2,6 +2,9 @@
 Sync MySQL to BigQuery Script
 用於將 MySQL 資料同步到 BigQuery
 """
+from decimal import Decimal
+from datetime import datetime
+
 from data_ingestion.bigquery import (
     create_dataset_if_not_exists,
     create_table,
@@ -17,9 +20,6 @@ from data_ingestion.bigquery import (
     hahow_course_sales_bq_schema,
     hahow_article_bq_schema
 )
-
-from decimal import Decimal
-
 
 # 同步的表配置
 tables_config = [
@@ -97,11 +97,13 @@ def sync_mysql_to_bigquery_no_pandas():
             sql = f"SELECT * FROM {config['mysql_table']}"
             rows = execute_query(sql)
 
-            # 將 Decimal 轉換為 float
+            # 將 Decimal 和 datetime 轉換為可序列化的類型
             for row in rows:
                 for key, value in row.items():
                     if isinstance(value, Decimal):
                         row[key] = float(value)
+                    elif isinstance(value, datetime):
+                        row[key] = value.isoformat()  # 將 datetime 轉換為 ISO 格式的字符串
 
             # 上傳到 BigQuery
             upload_data_to_bigquery_insert(table_name=config['bq_table'], data=rows)
