@@ -18,6 +18,8 @@ from data_ingestion.bigquery import (
     hahow_article_bq_schema
 )
 
+from decimal import Decimal
+
 
 # 同步的表配置
 tables_config = [
@@ -94,6 +96,12 @@ def sync_mysql_to_bigquery_no_pandas():
             # 從 MySQL 讀取資料
             sql = f"SELECT * FROM {config['mysql_table']}"
             rows = execute_query(sql)
+
+            # 將 Decimal 轉換為 float
+            for row in rows:
+                for key, value in row.items():
+                    if isinstance(value, Decimal):
+                        row[key] = float(value)
 
             # 上傳到 BigQuery
             upload_data_to_bigquery_insert(table_name=config['bq_table'], data=rows)
