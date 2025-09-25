@@ -166,14 +166,15 @@ def upload_data_to_bigquery(table_name: str, df: pd.DataFrame, dataset_id: str =
         print(f"❌ 上傳資料到 BigQuery 表 '{table_name}' 失敗: {e}")
         raise
 
-def upload_data_to_bigquery_insert(table_name: str, data: List[Dict], dataset_id: str = DATASET_ID):
+def upload_data_to_bigquery_insert(table_name: str, data: List[Dict], dataset_id: str = DATASET_ID, batch_size: int = 5000):
     """
-    使用 insert_rows_json 上傳資料到 BigQuery（類似 mysql.py 的 upload_data_to_mysql_insert）
+    使用 insert_rows_json 上傳資料到 BigQuery，支持分批上傳
     
     Args:
         table_name: 表名
         data: 要插入的資料列表
         dataset_id: Dataset ID
+        batch_size: 每批上傳的資料量
     """
     client = get_bigquery_client()
     table_id = f"{PROJECT_ID}.{dataset_id}.{table_name}"
@@ -182,14 +183,14 @@ def upload_data_to_bigquery_insert(table_name: str, data: List[Dict], dataset_id
         # 獲取表引用
         table = client.get_table(table_id)
         
-        # 直接插入資料
-        errors = client.insert_rows_json(table, data)
-        
-        if errors:
-            print(f"❌ 插入資料到 BigQuery 表 '{table_name}' 時發生錯誤: {errors}")
-            raise Exception(f"BigQuery 插入失敗: {errors}")
-        
-        print(f"✅ INSERT 完成，處理 {len(data)} 筆記錄到 BigQuery 表 '{table_name}'")
+        # 分批插入資料
+        for i in range(0, len(data), batch_size):
+            batch = data[i:i + batch_size]
+            errors = client.insert_rows_json(table, batch)
+            if errors:
+                print(f"❌ 插入資料到 BigQuery 表 '{table_name}' 時發生錯誤: {errors}")
+                raise Exception(f"BigQuery 插入失敗: {errors}")
+            print(f"✅ 已上傳 {len(batch)} 筆記錄到 {table_name}")
         
     except Exception as e:
         print(f"❌ 插入資料到 BigQuery 表 '{table_name}' 失敗: {e}")
