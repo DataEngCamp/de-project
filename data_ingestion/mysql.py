@@ -204,3 +204,60 @@ def create_table_from_view(view_name: str, table_name: str):
         except Exception as e:
             print(f"❌ 從 View '{view_name}' 建立 Table '{table_name}' 失敗: {e}")
             raise
+
+
+def execute_query(sql: str):
+    """
+    執行 MySQL SQL 查詢並返回結果
+    
+    Args:
+        sql: SQL 查詢語句
+    
+    Returns:
+        查詢結果的列表，每個元素是一個字典
+    """
+    mysql_address = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+    engine = create_engine(mysql_address)
+    
+    with engine.connect() as connection:
+        try:
+            result = connection.execute(text(sql))
+            
+            # 轉換為字典列表
+            columns = result.keys()
+            rows = []
+            for row in result.fetchall():
+                row_dict = {}
+                for i, value in enumerate(row):
+                    row_dict[columns[i]] = value
+                rows.append(row_dict)
+            
+            print(f"✅ 查詢執行成功，返回 {len(rows)} 筆記錄")
+            return rows
+            
+        except Exception as e:
+            print(f"❌ 查詢執行失敗: {e}")
+            raise
+
+
+def query_to_dataframe(sql: str) -> pd.DataFrame:
+    """
+    執行 MySQL SQL 查詢並返回 DataFrame
+    
+    Args:
+        sql: SQL 查詢語句
+    
+    Returns:
+        查詢結果的 DataFrame
+    """
+    mysql_address = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+    engine = create_engine(mysql_address)
+    
+    try:
+        df = pd.read_sql(sql, engine)
+        print(f"✅ 查詢執行成功，返回 DataFrame，共 {len(df)} 筆記錄")
+        return df
+        
+    except Exception as e:
+        print(f"❌ 查詢執行失敗: {e}")
+        raise

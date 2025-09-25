@@ -29,11 +29,9 @@ RUN uv pip install --system --force-reinstall pymysql==1.1.2
 COPY ../pyproject.toml ../uv.lock ../README.md /opt/airflow/
 COPY ../data_ingestion /opt/airflow/data_ingestion/
 
-# 直接安裝專案依賴到系統環境（不建立虛擬環境）
+# 安裝專案依賴，然後強制重新安裝指定版本的 SQLAlchemy
 RUN cd /opt/airflow && uv pip install --system -e .
-
-# 強制重新安裝 SQLAlchemy 1.4.36（解決 Airflow 2.10.4 依賴衝突）
-RUN uv pip install --system --force-reinstall --no-deps sqlalchemy==1.4.36
+RUN uv pip install --system --reinstall sqlalchemy==1.4.36
 
 # 設定時區和 Airflow 主目錄
 ENV AIRFLOW_HOME=/opt/airflow
