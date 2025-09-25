@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # BigQuery 配置
-DATASET_ID = "hahow_analytics"
+DATASET_ID = "hahow"
 
 def get_bigquery_client():
     """建立 BigQuery 客戶端"""
