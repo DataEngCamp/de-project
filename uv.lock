@@ -373,6 +373,48 @@ wheels = [
 ]
 
 [[package]]
+name = "db-dtypes"
+version = "1.4.2"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.9'",
+]
+dependencies = [
+    { name = "numpy", version = "1.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "packaging", marker = "python_full_version < '3.9'" },
+    { name = "pandas", version = "2.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "pyarrow", version = "17.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7c/f3/65b49a0b3f6cc0e4daf46112f7590d189eba87ee36f915cc13a2e6a0cecf/db_dtypes-1.4.2.tar.gz", hash = "sha256:04348969e0d533de5f11ec3ac8fcb2dd983ac40229d042198ab9d8de51801a6e", size = 33539, upload-time = "2025-03-05T23:44:59.62Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/69/aa/8f09c6af64d562606d128acab327dab759ac005a204f470c6d257f47d857/db_dtypes-1.4.2-py2.py3-none-any.whl", hash = "sha256:b3cd0128c8310a2e9ef249da2353e5cb07c62d8a3ce800c7990f9998eee74582", size = 18970, upload-time = "2025-03-05T23:44:58.489Z" },
+]
+
+[[package]]
+name = "db-dtypes"
+version = "1.4.3"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.13'",
+    "python_full_version == '3.12.*'",
+    "python_full_version == '3.11.*'",
+    "python_full_version == '3.10.*'",
+    "python_full_version == '3.9.*'",
+]
+dependencies = [
+    { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "numpy", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "packaging", marker = "python_full_version >= '3.9'" },
+    { name = "pandas", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+    { name = "pyarrow", version = "21.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7d/c8/83fd7a11ef8d960da6c58d1a36b430b0a1818ae7a1da6efe887d96c35f40/db_dtypes-1.4.3.tar.gz", hash = "sha256:d3cb08c32939d24e05501f17694be8c1c54cfb4620d61fb56fb311e8c3d8885e", size = 33379, upload-time = "2025-05-12T13:54:21.736Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/db/91/66065d933b4814295fd0ddc16a66ef193dff14bf8d15895723f38640a3ab/db_dtypes-1.4.3-py3-none-any.whl", hash = "sha256:a1c92b819af947fae1701d80a71f2a0eac08f825ca52cf0c68aeba80577ae966", size = 18110, upload-time = "2025-05-12T13:54:20.146Z" },
+]
+
+[[package]]
 name = "de-project"
 version = "0.1.0"
 source = { editable = "." }
@@ -384,6 +426,8 @@ dependencies = [
     { name = "ipykernel", version = "6.30.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
     { name = "pandas", version = "2.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "pandas", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+    { name = "pandas-gbq", version = "0.29.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "pandas-gbq", version = "0.29.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
     { name = "pyarrow", version = "17.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "pyarrow", version = "21.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
     { name = "pymysql" },
@@ -397,6 +441,7 @@ requires-dist = [
     { name = "google-cloud-bigquery", specifier = ">=3.11.4" },
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "pandas", specifier = ">=2.0.3" },
+    { name = "pandas-gbq", specifier = ">=0.29.1" },
     { name = "pyarrow", specifier = ">=17.0.0" },
     { name = "pymysql", specifier = "==1.1.2" },
     { name = "requests", specifier = ">=2.32.4" },
@@ -503,6 +548,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/9e/9b/e92ef23b84fa10a64ce4831390b7a4c2e53c0132568d99d4ae61d04c8855/google_auth-2.40.3.tar.gz", hash = "sha256:500c3a29adedeb36ea9cf24b8d10858e152f2412e3ca37829b3fa18e33d63b77", size = 281029, upload-time = "2025-06-04T18:04:57.577Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/17/63/b19553b658a1692443c62bd07e5868adaa0ad746a0751ba62c59568cd45b/google_auth-2.40.3-py2.py3-none-any.whl", hash = "sha256:1370d4593e86213563547f97a92752fc658456fe4514c809544f330fed45a7ca", size = 216137, upload-time = "2025-06-04T18:04:55.573Z" },
+]
+
+[[package]]
+name = "google-auth-oauthlib"
+version = "1.2.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "google-auth" },
+    { name = "requests-oauthlib" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fb/87/e10bf24f7bcffc1421b84d6f9c3377c30ec305d082cd737ddaa6d8f77f7c/google_auth_oauthlib-1.2.2.tar.gz", hash = "sha256:11046fb8d3348b296302dd939ace8af0a724042e8029c1b872d87fabc9f41684", size = 20955, upload-time = "2025-04-22T16:40:29.172Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ac/84/40ee070be95771acd2f4418981edb834979424565c3eec3cd88b6aa09d24/google_auth_oauthlib-1.2.2-py3-none-any.whl", hash = "sha256:fd619506f4b3908b5df17b65f39ca8d66ea56986e5472eb5978fd8f3786f00a2", size = 19072, upload-time = "2025-04-22T16:40:28.174Z" },
 ]
 
 [[package]]
@@ -1534,6 +1592,15 @@ wheels = [
 ]
 
 [[package]]
+name = "oauthlib"
+version = "3.3.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0b/5f/19930f824ffeb0ad4372da4812c50edbd1434f678c90c2733e1188edfc63/oauthlib-3.3.1.tar.gz", hash = "sha256:0f0f8aa759826a193cf66c12ea1af1637f87b9b4622d46e866952bb022e538c9", size = 185918, upload-time = "2025-06-19T22:48:08.269Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/be/9c/92789c596b8df838baa98fa71844d84283302f7604ed565dafe5a6b5041a/oauthlib-3.3.1-py3-none-any.whl", hash = "sha256:88119c938d2b8fb88561af5f6ee0eec8cc8d552b7bb1f712743136eb7523b7a1", size = 160065, upload-time = "2025-06-19T22:48:06.508Z" },
+]
+
+[[package]]
 name = "packaging"
 version = "25.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1645,6 +1712,62 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/f7/74/7e817b31413fbb96366ea327d43d1926a9c48c58074e27e094e2839a0e36/pandas-2.3.1-cp39-cp39-musllinux_1_2_aarch64.whl", hash = "sha256:09e3b1587f0f3b0913e21e8b32c3119174551deb4a4eba4a89bc7377947977e7", size = 13225086, upload-time = "2025-07-07T19:19:56.378Z" },
     { url = "https://files.pythonhosted.org/packages/1f/0f/bc0a44b47eba2f22ae4235719a573d552ef7ad76ed3ea39ae62d554e040b/pandas-2.3.1-cp39-cp39-musllinux_1_2_x86_64.whl", hash = "sha256:2323294c73ed50f612f67e2bf3ae45aea04dce5690778e08a09391897f35ff88", size = 13871698, upload-time = "2025-07-07T19:19:58.854Z" },
     { url = "https://files.pythonhosted.org/packages/fa/cb/6c32f8fadefa4314b740fbe8f74f6a02423bd1549e7c930826df35ac3c1b/pandas-2.3.1-cp39-cp39-win_amd64.whl", hash = "sha256:b4b0de34dc8499c2db34000ef8baad684cfa4cbd836ecee05f323ebfba348c7d", size = 11357186, upload-time = "2025-07-07T19:20:01.475Z" },
+]
+
+[[package]]
+name = "pandas-gbq"
+version = "0.29.1"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.9'",
+]
+dependencies = [
+    { name = "db-dtypes", version = "1.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "google-api-core", marker = "python_full_version < '3.9'" },
+    { name = "google-auth", marker = "python_full_version < '3.9'" },
+    { name = "google-auth-oauthlib", marker = "python_full_version < '3.9'" },
+    { name = "google-cloud-bigquery", version = "3.30.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "numpy", version = "1.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "packaging", marker = "python_full_version < '3.9'" },
+    { name = "pandas", version = "2.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "pyarrow", version = "17.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "pydata-google-auth", version = "1.8.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "setuptools", version = "75.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6b/0c/18b893b071144bbd8c841987042e218c8e4d1fc590d8302842580d419a7b/pandas_gbq-0.29.1.tar.gz", hash = "sha256:a6ead6199174094317e05729677d30384460335bb2a138d02c1f2edbfdb78fc3", size = 65744, upload-time = "2025-06-09T14:24:48.112Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/13/5e/b2363eedadcdfca4588689d7240d09781a7a2bf7f3e1f60f914e0575ab00/pandas_gbq-0.29.1-py3-none-any.whl", hash = "sha256:21aaaf6f62723aeb3a8751f3fd8afff00f4b237ae722cbe6c4e79f17c8677086", size = 41065, upload-time = "2025-06-10T14:37:34.241Z" },
+]
+
+[[package]]
+name = "pandas-gbq"
+version = "0.29.2"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.13'",
+    "python_full_version == '3.12.*'",
+    "python_full_version == '3.11.*'",
+    "python_full_version == '3.10.*'",
+    "python_full_version == '3.9.*'",
+]
+dependencies = [
+    { name = "db-dtypes", version = "1.4.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+    { name = "google-api-core", marker = "python_full_version >= '3.9'" },
+    { name = "google-auth", marker = "python_full_version >= '3.9'" },
+    { name = "google-auth-oauthlib", marker = "python_full_version >= '3.9'" },
+    { name = "google-cloud-bigquery", version = "3.38.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+    { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "numpy", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "packaging", marker = "python_full_version >= '3.9'" },
+    { name = "pandas", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+    { name = "pyarrow", version = "21.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+    { name = "pydata-google-auth", version = "1.9.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+    { name = "setuptools", version = "80.9.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a5/ff/a81b01f9657b1c4b3b021e604b15a4ad1e5ac086977acf5ab74265a00a51/pandas_gbq-0.29.2.tar.gz", hash = "sha256:a3a28e7de4f8456fc4b8e9b7472b9bc470d2566f89c4cd997599e504f5a0a706", size = 65625, upload-time = "2025-07-10T16:24:56.017Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5b/e5/8f3607a8827ff499ee4b841599c5e2998bf6bf8a7d997215726039d72747/pandas_gbq-0.29.2-py3-none-any.whl", hash = "sha256:99f6b642bd8340e96c2acdf7d717108aa0d31c703c2f284817ba7dc3b16110b2", size = 40971, upload-time = "2025-07-10T16:24:55.047Z" },
 ]
 
 [[package]]
@@ -1944,6 +2067,44 @@ wheels = [
 ]
 
 [[package]]
+name = "pydata-google-auth"
+version = "1.8.2"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.9'",
+]
+dependencies = [
+    { name = "google-auth", marker = "python_full_version < '3.9'" },
+    { name = "google-auth-oauthlib", marker = "python_full_version < '3.9'" },
+    { name = "setuptools", version = "75.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/dd/52/ce9837060f4d1e842dc6aa9c6cf2231e4aab1bf5fdea1e4c8c83bf1f229c/pydata-google-auth-1.8.2.tar.gz", hash = "sha256:547b6c0fbea657dcecd50887c5db8640ebec062a59a2b88e8ff8e53a04818303", size = 29663, upload-time = "2023-08-01T17:02:28.56Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/28/6b/3320c9ddbfc572108917e8432a07e8bd1e40054d94b5ad40c755afdc1160/pydata_google_auth-1.8.2-py2.py3-none-any.whl", hash = "sha256:a9dce59af4a170ea60c4b2ebbc83ee1f74d34255a4f97b2469ae9a4a0dc98e99", size = 15293, upload-time = "2023-08-01T17:02:27.353Z" },
+]
+
+[[package]]
+name = "pydata-google-auth"
+version = "1.9.1"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.13'",
+    "python_full_version == '3.12.*'",
+    "python_full_version == '3.11.*'",
+    "python_full_version == '3.10.*'",
+    "python_full_version == '3.9.*'",
+]
+dependencies = [
+    { name = "google-auth", marker = "python_full_version >= '3.9'" },
+    { name = "google-auth-oauthlib", marker = "python_full_version >= '3.9'" },
+    { name = "setuptools", version = "80.9.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3f/0d/455cb39f0d5a914412b57c55c6b16977c61a5ac74b615eea4fb0dc54e329/pydata-google-auth-1.9.1.tar.gz", hash = "sha256:0a51ce41c601ca0bc69b8795bf58bedff74b4a6a007c9106c7cbcdec00eaced2", size = 29814, upload-time = "2025-01-23T21:04:40.875Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ca/cb/cdeaba62aa3c48f0d8834afb82b4a21463cd83df34fe01f9daa89a08ec6c/pydata_google_auth-1.9.1-py2.py3-none-any.whl", hash = "sha256:75ffce5d106e34b717b31844c1639ea505b7d9550dc23b96fb6c20d086b53fa3", size = 15552, upload-time = "2025-01-23T21:04:38.97Z" },
+]
+
+[[package]]
 name = "pygments"
 version = "2.19.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2128,6 +2289,19 @@ wheels = [
 ]
 
 [[package]]
+name = "requests-oauthlib"
+version = "2.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "oauthlib" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/42/f2/05f29bc3913aea15eb670be136045bf5c5bbf4b99ecb839da9b422bb2c85/requests-oauthlib-2.0.0.tar.gz", hash = "sha256:b3dffaebd884d8cd778494369603a9e7b58d29111bf6b41bdc2dcd87203af4e9", size = 55650, upload-time = "2024-03-22T20:32:29.939Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3b/5d/63d4ae3b9daea098d5d6f5da83984853c1bbacd5dc826764b249fe119d24/requests_oauthlib-2.0.0-py2.py3-none-any.whl", hash = "sha256:7dd8a5c40426b779b0868c404bdef9768deccf22749cde15852df527e6269b36", size = 24179, upload-time = "2024-03-22T20:32:28.055Z" },
+]
+
+[[package]]
 name = "rsa"
 version = "4.9.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2137,6 +2311,34 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/da/8a/22b7beea3ee0d44b1916c0c1cb0ee3af23b700b6da9f04991899d0c555d4/rsa-4.9.1.tar.gz", hash = "sha256:e7bdbfdb5497da4c07dfd35530e1a902659db6ff241e39d9953cad06ebd0ae75", size = 29034, upload-time = "2025-04-16T09:51:18.218Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/64/8d/0133e4eb4beed9e425d9a98ed6e081a55d195481b7632472be1af08d2f6b/rsa-4.9.1-py3-none-any.whl", hash = "sha256:68635866661c6836b8d39430f97a996acbd61bfa49406748ea243539fe239762", size = 34696, upload-time = "2025-04-16T09:51:17.142Z" },
+]
+
+[[package]]
+name = "setuptools"
+version = "75.3.2"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.9'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5c/01/771ea46cce201dd42cff043a5eea929d1c030fb3d1c2ee2729d02ca7814c/setuptools-75.3.2.tar.gz", hash = "sha256:3c1383e1038b68556a382c1e8ded8887cd20141b0eb5708a6c8d277de49364f5", size = 1354489, upload-time = "2025-03-12T00:02:19.004Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/15/65/3f0dba35760d902849d39d38c0a72767794b1963227b69a587f8a336d08c/setuptools-75.3.2-py3-none-any.whl", hash = "sha256:90ab613b6583fc02d5369cbca13ea26ea0e182d1df2d943ee9cbe81d4c61add9", size = 1251198, upload-time = "2025-03-12T00:02:17.554Z" },
+]
+
+[[package]]
+name = "setuptools"
+version = "80.9.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.13'",
+    "python_full_version == '3.12.*'",
+    "python_full_version == '3.11.*'",
+    "python_full_version == '3.10.*'",
+    "python_full_version == '3.9.*'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/18/5d/3bf57dcd21979b887f014ea83c24ae194cfcd12b9e0fda66b957c69d1fca/setuptools-80.9.0.tar.gz", hash = "sha256:f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c", size = 1319958, upload-time = "2025-05-27T00:56:51.443Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a3/dc/17031897dae0efacfea57dfd3a82fdd2a2aeb58e0ff71b77b87e44edc772/setuptools-80.9.0-py3-none-any.whl", hash = "sha256:062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922", size = 1201486, upload-time = "2025-05-27T00:56:49.664Z" },
 ]
 
 [[package]]
