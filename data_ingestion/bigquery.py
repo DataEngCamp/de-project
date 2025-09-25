@@ -5,10 +5,8 @@ BigQuery 操作模組
 import pandas as pd
 from google.cloud import bigquery
 from google.cloud.bigquery import SchemaField, LoadJobConfig, WriteDisposition
-import os
 import logging
-from typing import List, Dict, Any, Optional
-from datetime import datetime
+from typing import List, Dict
 from data_ingestion.config import GCP_PROJECT_ID as PROJECT_ID
 
 # 設置日誌
@@ -102,32 +100,33 @@ def hahow_article_bq_schema():
 
 # ========== 基礎操作函數 ==========
 
-def create_table(table_name: str, schema: List[SchemaField], dataset_id: str = DATASET_ID):
+def create_table(table_name: str, schema: List[SchemaField], dataset_id: str = DATASET_ID, partition_key: str = None):
     """
-    建立 BigQuery 表
-    
-    Args:
-        table_name: 表名
-        schema: BigQuery schema
-        dataset_id: Dataset ID
+    建立 BigQuery 表格，並可選擇性地指定分區。
+
+    參數：
+        table_name: 要建立的表格名稱。
+        schema: 表格的結構定義。
+        dataset_id: 表格將被建立的資料集 ID。
+        partition_key: 用於分區的欄位名稱（可選）。
     """
-    client = get_bigquery_client()
+    client = bigquery.Client()
     table_id = f"{PROJECT_ID}.{dataset_id}.{table_name}"
-    
-    # 確保 Dataset 存在
-    create_dataset_if_not_exists(dataset_id)
-    
+
     table = bigquery.Table(table_id, schema=schema)
-    
+
+    if partition_key:
+        table.time_partitioning = bigquery.TimePartitioning(
+            type_=bigquery.TimePartitioningType.DAY,
+            field=partition_key  # 用於分區的欄位名稱
+        )
+
     try:
         table = client.create_table(table)
-        print(f"✅ 建立 BigQuery 表 '{table_name}' 成功")
+        print(f"✅ 表格 {table_id} 建立成功。")
     except Exception as e:
-        if "already exists" in str(e).lower():
-            print(f"ℹ️  BigQuery 表 '{table_name}' 已存在")
-        else:
-            print(f"❌ 建立 BigQuery 表 '{table_name}' 失敗: {e}")
-            raise
+        print(f"❌ 表格 {table_id} 建立失敗: {e}")
+        raise
 
 def upload_data_to_bigquery(table_name: str, df: pd.DataFrame, dataset_id: str = DATASET_ID, mode: str = "replace"):
     """
@@ -141,9 +140,6 @@ def upload_data_to_bigquery(table_name: str, df: pd.DataFrame, dataset_id: str =
     """
     client = get_bigquery_client()
     table_id = f"{PROJECT_ID}.{dataset_id}.{table_name}"
-    
-    # 確保 Dataset 存在
-    create_dataset_if_not_exists(dataset_id)
     
     # 設定寫入模式
     if mode == "replace":
@@ -181,9 +177,6 @@ def upload_data_to_bigquery_insert(table_name: str, data: List[Dict], dataset_id
     """
     client = get_bigquery_client()
     table_id = f"{PROJECT_ID}.{dataset_id}.{table_name}"
-    
-    # 確保 Dataset 存在
-    create_dataset_if_not_exists(dataset_id)
     
     try:
         # 獲取表引用
@@ -278,6 +271,23 @@ def create_table_from_view(view_name: str, table_name: str, dataset_id: str = DA
     except Exception as e:
         print(f"❌ 從 View '{view_name}' 建立 BigQuery Table '{table_name}' 失敗: {e}")
         raise
+
+def drop_table_if_exists(table_name: str, dataset_id: str = DATASET_ID):
+    """
+    刪除 BigQuery 表格（如果存在）
+
+    Args:
+        table_name: 要刪除的表格名稱。
+        dataset_id: 表格所在的資料集 ID。
+    """
+    client = get_bigquery_client()
+    table_id = f"{PROJECT_ID}.{dataset_id}.{table_name}"
+
+    try:
+        client.delete_table(table_id)
+        print(f"✅ 表格 {table_id} 已刪除。")
+    except Exception as e:
+        print(f"❌ 刪除表格 {table_id} 失敗或表格不存在: {e}")
 
 # ========== 具體業務邏輯函數 ==========
 
