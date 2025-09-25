@@ -224,7 +224,7 @@ def execute_query(sql: str):
             result = connection.execute(text(sql))
             
             # 轉換為字典列表
-            columns = result.keys()
+            columns = list(result.keys())  # 將 keys 轉換為列表
             rows = []
             for row in result.fetchall():
                 row_dict = {}
