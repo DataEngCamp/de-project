@@ -9,7 +9,6 @@ x-airflow-common: &airflow-common
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     AIRFLOW__CORE__DEFAULT_TIMEZONE: Asia/Taipei
-    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/config/key.json
   env_file:
     - ../.env
   volumes:
@@ -21,7 +20,6 @@ x-airflow-common: &airflow-common
     # 將 data_ingestion 和 output 掛載到容器中，讓 Airflow 可以執行 data_ingestion 下的 Python 程式
     - ../data_ingestion:/opt/airflow/data_ingestion
     - ../output:/opt/airflow/output
-    - ../key.json:/opt/airflow/config/key.json
     # 將 docker.sock 掛載到容器中，讓 Airflow 可以執行 docker 命令
     - /var/run/docker.sock:/var/run/docker.sock
   networks:

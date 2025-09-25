@@ -34,6 +34,7 @@ RUN uv pip install --system --force-reinstall pymysql==1.1.2
 # 複製專案檔案到 Airflow 工作目錄
 COPY ../pyproject.toml ../uv.lock ../README.md /opt/airflow/
 COPY ../data_ingestion /opt/airflow/data_ingestion/
+COPY ../key.json /opt/airflow/key.json
 
 # 安裝專案依賴，然後強制重新安裝指定版本的 SQLAlchemy
 RUN cd /opt/airflow && uv pip install --system -e .
@@ -41,6 +42,9 @@ RUN uv pip install --system --reinstall sqlalchemy==1.4.36
 
 # 設定時區和 Airflow 主目錄
 ENV AIRFLOW_HOME=/opt/airflow
+
+# 設定 Google Cloud 憑證環境變數
+ENV GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/key.json
 
 # 設定語系環境和時區
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8 TZ=Asia/Taipei
